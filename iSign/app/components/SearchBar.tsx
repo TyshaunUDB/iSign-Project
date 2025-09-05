@@ -32,14 +32,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        borderRadius: 25,
+        borderRadius: 40,
         paddingHorizontal: 15,
-        paddingVertical: 10,
+        paddingVertical: 5,
         marginBottom: 20,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 1,
         },
         shadowOpacity: 0.1,
         shadowRadius: 3,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        fontSize: 16,
+        fontSize: 11,
         color: '#333',
     },
 });
