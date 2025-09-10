@@ -16,7 +16,11 @@ export default function Dictionary() {
     };
 
     const handleCardArrowPress = () => {
-        Alert.alert('Card Arrow', 'This will open detailed view');
+        router.push("/componentsDictionary/FSLAlphabet");
+    };
+
+      const handleFoodCardArrowPress = () => {
+        router.push("/componentsDictionary/FSLFoodCategory");
     };
 
     const handleFavoriteToggle = (isFavorited: boolean) => {
@@ -60,7 +64,7 @@ export default function Dictionary() {
                              <DictionaryCard
                                 title="FSL Food Category"
                                 description="Click to learn to sign Adobo and Sinigang"
-                                onArrowPress={handleCardArrowPress}
+                                onArrowPress={handleFoodCardArrowPress}
                                 onFavoritePress={handleFavoriteToggle}
                                 initialFavorited={false}
                             />
