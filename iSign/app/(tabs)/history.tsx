@@ -5,6 +5,7 @@ import UserHeader from '../components/Userheader';
 import SearchBar from '../components/SearchBar';
 import ConversationItem from '../components/ConversationItem';
 import ConversationModal from '../components/ConversationModal';
+import Navbar from './navbar';
 
 interface Conversation {
     id: string;
@@ -93,6 +94,7 @@ export default function History() {
 
     return (
         <View style={styles.container}>
+            <Navbar />
             <View style={styles.topBackground}>
                 <View style={styles.middleBackground}>
 
@@ -103,7 +105,7 @@ export default function History() {
 
                     <View style={styles.contentBackground}>
                         <SearchBar
-                            placeholder="Search conversations..."
+                            placeholder="Search chat..."
                             value={searchQuery}
                             onChangeText={setSearchQuery}
                         />

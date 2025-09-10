@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import Navbar from './navbar';
+import ChatTab from '../componentsCamera/ChatTab';
 
 export default function Camera() {
     const [facing, setFacing] = useState<CameraType>('back');
@@ -24,24 +26,25 @@ export default function Camera() {
         );
     }
 
-
     function toggleCameraFacing() {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     }
 
     return (
         <View style={styles.container}>
+            <Navbar />
             <CameraView
                 style={styles.camera}
                 facing={facing}
                 ref={cameraRef}
             >
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.flipButton} onPress={toggleCameraFacing}>
-                        <Feather name="refresh-ccw" size={16} color="white" style={{ marginRight: 4 }} />
-                    </TouchableOpacity>
+                   <TouchableOpacity style={styles.flipButton} onPress={toggleCameraFacing}>
+    <Feather name="refresh-ccw" size={16} color="white" style={{ marginRight: 4 }} />
+</TouchableOpacity>
                 </View>
             </CameraView>
+            <ChatTab />
             <View style={styles.navbarSpacer} />
         </View>
     );
@@ -76,13 +79,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 20,
     },
-    flipButton: {
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        padding: 12,
-        borderRadius: 25,
-        minWidth: 60,
-        alignItems: 'center',
-    },
+   flipButton: {
+    position: 'absolute',
+    top: 40,   // adjust for safe area / status bar
+    left: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    padding: 12,
+    borderRadius: 25,
+    minWidth: 60,
+    alignItems: 'center',
+},
+
     captureButtonInner: {
         width: 60,
         height: 60,

@@ -9,7 +9,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
-    placeholder = "Search conversations...",
+    placeholder = "Search...",
     value,
     onChangeText
 }) => {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 40,
         paddingHorizontal: 15,
-        paddingVertical: 5,
+        paddingVertical: 0,
         marginBottom: 20,
         shadowColor: '#000',
         shadowOffset: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        fontSize: 11,
+        fontSize: 10,
         color: '#333',
     },
 });

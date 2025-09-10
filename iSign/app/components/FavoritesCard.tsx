@@ -21,7 +21,7 @@ export default function FavoritesCard({ title, subtitle, onPlayPress, placeholde
 
         <View style={styles.hiImageContainer}>
           <Image 
-            source={require('../../assets/images/favorites1.png.png')}
+            source={require('../../assets/images/favorites1.png.png')} 
             style={styles.favoritesImage}
             resizeMode="contain"
           />
