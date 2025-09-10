@@ -1,14 +1,25 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, Stack } from 'expo-router';
 import Navbar from '../(tabs)/navbar';
 // Import components
 import UserHeader from '../components/Userheader';
 import SearchBar from '../components/SearchBar';
+import DictionaryCard from './DictionaryCard';
+import { router } from 'expo-router';
 
 export default function FavoritesTab() {
     const router = useRouter();
+    
+      const handleCardArrowPress = () => {
+              router.push("/componentsDictionary/FSLAlphabet");
+        };
+    
+        const handleFavoriteToggle = (isFavorited: boolean) => {
+            console.log('Favorite toggled:', isFavorited);
+        };
+    
 
     return (
         <View style={styles.container}>
@@ -30,8 +41,19 @@ export default function FavoritesTab() {
                             style={styles.scrollContainer}
                             contentContainerStyle={styles.contentContainer}
                             showsVerticalScrollIndicator={false}
+                            
                         >
-                            {/* Favorites content will go here */}
+
+                            <DictionaryCard
+                                                            title="FSL Alphabet"
+                                                            description="Click to learn the FSL alphabet"
+                                                            onArrowPress={handleCardArrowPress}
+                                                            onFavoritePress={handleFavoriteToggle}
+                                                            initialFavorited={true}
+                                                            imageSource={require('../../assets/images/fslalphabet.png')}
+                                                            />
+                                                            
+                           
                         </ScrollView>
                     </View>
                 </View>

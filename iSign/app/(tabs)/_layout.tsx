@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#000000',
     },
     icon: {
-        zIndex: 3, // Ensure icon is on top
+        zIndex: 3, 
     },
 });
 
