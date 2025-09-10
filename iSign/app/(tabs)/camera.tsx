@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import Navbar from './navbar';
 
 export default function Camera() {
     const [facing, setFacing] = useState<CameraType>('back');
@@ -31,6 +32,7 @@ export default function Camera() {
 
     return (
         <View style={styles.container}>
+            <Navbar />
             <CameraView
                 style={styles.camera}
                 facing={facing}

@@ -8,12 +8,13 @@ import SignOfDayCard from '../components/SignOfDayCard';
 import FactCard from '../components/FactCard';
 import ChitChatsSection from '../components/ChitChatsSection';
 import SignOfDayModal from '../components/SignOfDayModal';
+import { router } from "expo-router";
+import Navbar from "./navbar";
 
 export default function Index() {
     const [modalVisible, setModalVisible] = useState(false);
     const [currentFactIndex, setCurrentFactIndex] = useState(0);
 
-    // Sample facts pool
     const facts = [
         {
             title: "Did you know?",
@@ -29,14 +30,12 @@ export default function Index() {
         }
     ];
 
-    // Sample chat data
     const chatItems = [
         {
             title: "Asked for directions",
             date: "Chat from November 6, 2024"
         },
-
-         {
+        {
             title: "McDonald's Order",
             date: "Chat from October 29, 2024"
         }
@@ -46,8 +45,9 @@ export default function Index() {
         setCurrentFactIndex((prevIndex) => (prevIndex + 1) % facts.length);
     };
 
+    // ✅ Navigation to FavoritesTab.tsx
     const handleFavoritesPress = () => {
-        console.log("Navigate to favorites");
+        router.push("/componentsDictionary/FavoritesTab");
     };
 
     const handleSignOfDayPress = () => {
@@ -60,6 +60,7 @@ export default function Index() {
 
     return (
         <View style={styles.container}>
+              <Navbar />
             <View style={styles.topBackground}>
                 <View style={styles.middleBackground}>
 

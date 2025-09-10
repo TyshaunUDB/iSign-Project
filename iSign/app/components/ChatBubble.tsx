@@ -27,14 +27,6 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
                 ]}>
                     {message}
                 </Text>
-                {timestamp && (
-                    <Text style={[
-                        styles.timestamp,
-                        isUser ? styles.userTimestamp : styles.senderTimestamp
-                    ]}>
-                        {timestamp}
-                    </Text>
-                )}
             </View>
         </View>
     );
@@ -42,14 +34,16 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: 4,
-        paddingHorizontal: 15,
+        marginVertical: 7,
+        paddingHorizontal: 5,
     },
     userContainer: {
         alignItems: 'flex-end',
+        marginBottom: 5,
     },
     senderContainer: {
         alignItems: 'flex-start',
+        marginBottom: 5,
     },
     bubble: {
         maxWidth: '80%',
@@ -58,7 +52,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     userBubble: {
-        backgroundColor: '#007AFF',
+        backgroundColor: '#343434',
         borderBottomRightRadius: 8,
     },
     senderBubble: {
@@ -66,24 +60,14 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 8,
     },
     messageText: {
-        fontSize: 16,
-        lineHeight: 20,
+        fontSize: 11,
+        lineHeight: 12,
     },
     userText: {
         color: 'white',
     },
     senderText: {
         color: '#000',
-    },
-    timestamp: {
-        fontSize: 12,
-        marginTop: 4,
-    },
-    userTimestamp: {
-        color: 'rgba(255, 255, 255, 0.7)',
-    },
-    senderTimestamp: {
-        color: '#666',
     },
 });
 

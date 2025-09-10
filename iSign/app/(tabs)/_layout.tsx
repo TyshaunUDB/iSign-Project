@@ -26,27 +26,10 @@ const _Layout = () => {
     return (
         <Tabs
             screenOptions={{
-                tabBarStyle: {
-                    backgroundColor: '#ffffff',
-                    borderRadius: 30,
-                    height: 100,
-                    paddingTop: 10,
-                    position: 'absolute',
-                    shadowColor: '#000',
-                    shadowOffset: { width: 0, height: -2 },
-                    shadowOpacity: 0.1,
-                    shadowRadius: 8,
-                    elevation: 5,
-                    borderTopWidth: 0,
-                },
+                tabBarStyle: { display: 'none' }, // This hides the default tab bar completely
                 tabBarShowLabel: false,
-                tabBarButton: (props) => (
-                    <TouchableOpacity
-                        {...props}
-                        activeOpacity={1}
-                        style={[props.style, { flex: 1 }]}
-                    />
-                ),
+                headerShown: false, // This removes all headers
+                animation: 'none', // Removes animations
             }}
         >
             <Tabs.Screen
