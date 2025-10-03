@@ -1,62 +1,45 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from "react-native";
 
 import UserHeader from '../components/Userheader';
-import Navbar from './navbar';
+import Navbar from '../(tabs)/navbar';
 import EditProfileHeader from '../componentsProfile/EditProfileHeader';
 import ProfileField from '../componentsProfile/ProfileField';
 import ChangeInfoButton from '../componentsProfile/ChangeInfoButton';
 import SettingsOption from '../componentsProfile/SettingsOption';
 import LogOutButton from '../componentsProfile/LogOutButton';
 
-import { router } from 'expo-router';  // Import router
+import { useRouter, Stack } from 'expo-router';
 
-export default function Profile() {
+export default function ChangeEmail() {
   return (
     <View style={styles.container}>
       <Navbar />
+      <Stack.Screen options={{ headerShown: false }} />
       <View style={styles.topBackground}>
         <View style={styles.middleBackground}>
-          <UserHeader userName="Popoy" greeting="Kamusta," />
+          <UserHeader 
+            userName="Popoy" 
+            greeting="Kamusta," 
+          />
 
           <View style={styles.contentBackground}>
-            <ScrollView
+            <ScrollView 
               style={styles.scrollContainer}
               contentContainerStyle={styles.scrollContentContainer}
               showsVerticalScrollIndicator={false}
             >
-              <EditProfileHeader />
+              {/* Add marginTop or paddingTop to move ProfileField down */}
+              <View style={styles.profileFieldContainer}>
+                <ProfileField
+                                  label="Email"
+                                  placeholder="p****@gmail.com"
+                                  editable={true} value={''}                />
+              </View>
 
-              <ProfileField
-                              label="Full Name"
-                              placeholder="Popoy"
-                              editable={true} value={''}              />
-
-              <ProfileField label="Email" placeholder="p***@gmail.com" editable={false} value={''} />
-
-              <ProfileField
-                label="Phone Number"
-                placeholder="+63 915 362 8520"
-                value={''}
+              <ChangeInfoButton 
+                buttonText='Change Email'
               />
-
-              <ChangeInfoButton
-              buttonText='Change Info'
-               />
-
-              <SettingsOption
-                title="Change Email"
-                iconName="mail-outline"
-                route="/componentsProfile/ChangeEmail"  // Correct path to ChangeEmail
-              />
-
-              <SettingsOption
-                title="Change Password"
-                iconName="lock-closed-outline"
-                route="/componentsProfile/ChangePassword"  // Correct path to ChangePassword
-              />
-
-              <LogOutButton />
             </ScrollView>
           </View>
         </View>
@@ -67,6 +50,7 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   container: {
+    alignContent: 'center',
     flex: 1,
     backgroundColor: '#a3a3a3',
   },
@@ -100,4 +84,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     flexGrow: 1,
   },
+  // New style for ProfileField container
+  profileFieldContainer: {
+    marginTop: 200, // Adjust this to move it further down
+  }
 });
