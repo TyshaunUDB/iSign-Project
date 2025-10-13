@@ -6,6 +6,10 @@ import SearchBar from '../components/SearchBar';
 import ConversationItem from '../components/ConversationItem';
 import ConversationModal from '../components/ConversationModal';
 import Navbar from './navbar';
+import SignUp from '../authentication/SignUp';
+
+import { router } from 'expo-router';
+import { Text, TouchableOpacity } from 'react-native';
 
 interface Conversation {
     id: string;
@@ -98,6 +102,7 @@ export default function History() {
             <View style={styles.topBackground}>
                 <View style={styles.middleBackground}>
 
+
                     <UserHeader 
                         userName="History" 
                         greeting="Chat" 
@@ -114,6 +119,11 @@ export default function History() {
                             style={styles.scrollContainer}
                             showsVerticalScrollIndicator={false}
                         >
+                            
+                             <TouchableOpacity onPress={() => router.push('/authentication/SignUp')}>
+                        <Text>Go to Sign Up</Text>
+                         </TouchableOpacity>
+                            
                             {filteredConversations.map((conversation) => (
                                 <ConversationItem
                                     key={conversation.id}
