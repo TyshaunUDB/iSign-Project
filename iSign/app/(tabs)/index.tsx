@@ -59,6 +59,7 @@ export default function Index() {
     };
 
     return (
+        
         <View style={styles.container}>
               <Navbar />
             <View style={styles.topBackground}>
@@ -102,6 +103,7 @@ export default function Index() {
                                 chatItems={chatItems}
                                 onChatItemPress={handleChatItemPress}
                             />
+
 
                         </ScrollView>
                     </View>
