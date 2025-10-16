@@ -47,7 +47,7 @@ export default function Profile() {
               <SettingsOption
                 title="Change Email"
                 iconName="mail-outline"
-                route="/componentsProfile/ChangeEmail"  // Correct path to ChangeEmail
+                route="/componentsProfile/ChangeEmailOld"  // Correct path to ChangeEmail
               />
 
               <SettingsOption

@@ -11,39 +11,38 @@ import {
   Keyboard,
   Platform
 } from "react-native";
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import UserHeader from '../components/Userheader';
 
-export default function ChangePassword() {
-  const [oldPassword, setOldPassword] = useState('');
+export default function ForgotPasswordNew() {
   const [newPassword, setNewPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
   const [error, setError] = useState('');
-  const [showOld, setShowOld] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showRetype, setShowRetype] = useState(false);
 
   const handleSubmit = () => {
     setError('');
 
-    if (!oldPassword || !newPassword || !retypePassword) {
+    if (!newPassword || !retypePassword) {
       setError('Please fill out all fields.');
       return;
     }
 
     if (newPassword.length < 8) {
-      setError('New password must be at least 8 characters long.');
+      setError('Password must be at least 8 characters long.');
       return;
     }
 
     if (newPassword !== retypePassword) {
-      setError('New passwords do not match.');
+      setError('Passwords do not match.');
       return;
     }
 
-    // Placeholder for next action
-    alert('Password successfully changed!');
+    // Temporary success message + redirect
+    alert('Password reset successful! You can now log in.');
+    router.push('/authentication/LogIn'); // navigate to your login screen
   };
 
   return (
@@ -56,7 +55,7 @@ export default function ChangePassword() {
           <Stack.Screen options={{ headerShown: false }} />
           <View style={styles.topBackground}>
             <View style={styles.middleBackground}>
-              <UserHeader userName="Popoy" greeting="Kamusta," />
+              <UserHeader userName="Password" greeting="Set New" />
 
               <View style={styles.contentBackground}>
                 <ScrollView
@@ -66,37 +65,16 @@ export default function ChangePassword() {
                   keyboardShouldPersistTaps="handled"
                 >
                   {/* Title */}
-                  <Text style={styles.title}>Change Your Password</Text>
+                  <Text style={styles.title}>Set Your New Password</Text>
 
                   {/* Password Fields */}
-                  <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>Enter Old Password</Text>
-                    <View style={styles.inputWrapper}>
-                      <TextInput
-                        style={styles.input}
-                        secureTextEntry={!showOld}
-                        placeholder="••••••••"
-                        placeholderTextColor="#aaa"
-                        value={oldPassword}
-                        onChangeText={setOldPassword}
-                      />
-                      <TouchableOpacity onPress={() => setShowOld(!showOld)}>
-                        <Ionicons
-                          name={showOld ? "eye-off" : "eye"}
-                          size={20}
-                          color="#555"
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-
                   <View style={styles.fieldContainer}>
                     <Text style={styles.label}>Enter New Password</Text>
                     <View style={styles.inputWrapper}>
                       <TextInput
                         style={styles.input}
                         secureTextEntry={!showNew}
-                        placeholder="••••••••"
+                        placeholder="New Password"
                         placeholderTextColor="#aaa"
                         value={newPassword}
                         onChangeText={setNewPassword}
@@ -112,12 +90,12 @@ export default function ChangePassword() {
                   </View>
 
                   <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>Retype New Password</Text>
+                    <Text style={styles.label}>Re-Enter New Password</Text>
                     <View style={styles.inputWrapper}>
                       <TextInput
                         style={styles.input}
                         secureTextEntry={!showRetype}
-                        placeholder="••••••••"
+                        placeholder="Re-enter New Password"
                         placeholderTextColor="#aaa"
                         value={retypePassword}
                         onChangeText={setRetypePassword}
@@ -183,11 +161,11 @@ const styles = StyleSheet.create({
     color: '#343434',
   },
   fieldContainer: {
-    width: '90%',
+    width: '80%',
     marginBottom: 20,
   },
   label: {
-    fontSize: 11,
+    fontSize: 12,
     color: '#555',
     marginBottom: 8,
     marginLeft: 5,
@@ -203,8 +181,8 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 50,
-    fontSize: 12,
+    height: 47,
+    fontSize: 11,
     color: '#333',
   },
   buttonSub: {
@@ -225,7 +203,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: '#e63946',
-    fontSize: 10,
+    fontSize: 11,
     marginBottom: 10,
     textAlign: 'center',
   },
