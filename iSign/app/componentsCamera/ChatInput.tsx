@@ -8,9 +8,14 @@ import {
     Platform,
     Animated,
     Keyboard,
+    Alert,
 } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+    ExpoSpeechRecognitionModule,
+    useSpeechRecognitionEvent,
+} from 'expo-speech-recognition';
 
 interface ChatInputProps {
     onSendMessage?: (message: string) => void;
@@ -28,6 +33,8 @@ export default function ChatInput({
     const [message, setMessage] = useState('');
     const [isInputFocused, setIsInputFocused] = useState(false);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
+    const [isRecordingLocal, setIsRecordingLocal] = useState(false);
+    const [recognizing, setRecognizing] = useState(false);
     const insets = useSafeAreaInsets();
     const recordingAnimation = useRef(new Animated.Value(1)).current;
 
@@ -53,9 +60,34 @@ export default function ChatInput({
         };
     }, []);
 
+    // Speech recognition events
+    useSpeechRecognitionEvent('start', () => {
+        setRecognizing(true);
+        setIsRecordingLocal(true);
+    });
+
+    useSpeechRecognitionEvent('end', () => {
+        setRecognizing(false);
+        setIsRecordingLocal(false);
+    });
+
+    useSpeechRecognitionEvent('result', (event) => {
+        const transcript = event.results[0]?.transcript;
+        if (transcript) {
+            setMessage(transcript);
+        }
+    });
+
+    useSpeechRecognitionEvent('error', (event) => {
+        console.error('Speech recognition error:', event.error);
+        Alert.alert('Error', `Speech recognition failed: ${event.error}`);
+        setRecognizing(false);
+        setIsRecordingLocal(false);
+    });
+
     // Start pulsing animation when recording
     useEffect(() => {
-        if (isRecording) {
+        if (isRecordingLocal || isRecording || recognizing) {
             Animated.loop(
                 Animated.sequence([
                     Animated.timing(recordingAnimation, {
@@ -73,7 +105,7 @@ export default function ChatInput({
         } else {
             recordingAnimation.setValue(1);
         }
-    }, [isRecording]);
+    }, [isRecordingLocal, isRecording, recognizing]);
 
     const handleSend = () => {
         if (message.trim() && onSendMessage) {
@@ -82,11 +114,55 @@ export default function ChatInput({
         }
     };
 
-    const handleMicrophonePress = () => {
-        if (isRecording && onStopRecording) {
-            onStopRecording();
-        } else if (!isRecording && onStartRecording) {
-            onStartRecording();
+    const handleMicrophonePress = async () => {
+        if (recognizing || isRecordingLocal) {
+            // Stop recording
+            ExpoSpeechRecognitionModule.stop();
+            if (onStopRecording) {
+                onStopRecording();
+            }
+        } else {
+            // Start recording
+            try {
+                // Request permissions
+                const { status } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+                
+                if (status !== 'granted') {
+                    Alert.alert(
+                        'Permission Required',
+                        'Microphone permission is required for voice input.'
+                    );
+                    return;
+                }
+
+                // // Check if speech recognition is available
+                // const result = await ExpoSpeechRecognitionModule.getStateAsync();
+                // if (!result.available) {
+                //     Alert.alert(
+                //         'Not Available',
+                //         'Speech recognition is not available on this device.'
+                //     );
+                //     return;
+                // }
+
+                // Start recognition
+                ExpoSpeechRecognitionModule.start({
+                    lang: 'en-US',
+                    interimResults: true,
+                    maxAlternatives: 1,
+                    continuous: false,
+                    requiresOnDeviceRecognition: false,
+                    addsPunctuation: true,
+                    contextualStrings: [],
+                });
+
+                if (onStartRecording) {
+                    onStartRecording();
+                }
+            } catch (error) {
+                console.error('Error starting speech recognition:', error);
+                Alert.alert('Error', 'Failed to start voice recording');
+            }
         }
     };
 
@@ -125,16 +201,16 @@ export default function ChatInput({
                             <TouchableOpacity
                                 style={[
                                     styles.microphoneButton,
-                                    isRecording && styles.recordingButton
+                                    (isRecordingLocal || recognizing) && styles.recordingButton
                                 ]}
                                 onPress={handleMicrophonePress}
                                 activeOpacity={0.7}
                             >
                                 <Animated.View style={{ opacity: recordingAnimation }}>
                                     <MaterialIcons
-                                        name={isRecording ? "stop" : "mic"}
+                                        name={(isRecordingLocal || recognizing) ? "stop" : "mic"}
                                         size={24}
-                                        color={isRecording ? "#FF3B30" : "#343434"}
+                                        color={(isRecordingLocal || recognizing) ? "#FF3B30" : "#343434"}
                                     />
                                 </Animated.View>
                             </TouchableOpacity>
