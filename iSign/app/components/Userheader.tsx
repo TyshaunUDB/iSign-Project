@@ -23,6 +23,7 @@ export default function Userheader({ userName, greeting }: UserHeaderProps) {
         />
 
         {/* ✅ Corrected navigation path */}
+        {/* ✅ Corrected navigation path */}
         <TouchableOpacity onPress={() => router.push('/components/Preferences')}>
           <Ionicons
             name="settings"
