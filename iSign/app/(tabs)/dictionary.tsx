@@ -61,13 +61,13 @@ export default function Dictionary() {
                                 />
 
 
-                             <DictionaryCard
+                             {/* <DictionaryCard
                                 title="FSL Food Category"
                                 description="Click to learn to sign Adobo and Sinigang"
                                 onArrowPress={handleFoodCardArrowPress}
                                 onFavoritePress={handleFavoriteToggle}
                                 initialFavorited={false}
-                            />
+                            /> */}
                             
                         </ScrollView>
                     </View>

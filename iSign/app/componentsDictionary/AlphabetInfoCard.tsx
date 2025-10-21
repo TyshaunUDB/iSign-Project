@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   alphabetImage: {
-    width: 30,
-    height: 30,
+    width: 100,
+    height: 100,
     borderRadius: 8,
   },
   textContainer: {
@@ -53,15 +53,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#343434',
     marginBottom: 4,
   },
   description: {
-    fontSize: 12,
+    fontSize: 8,
     color: '#888888',
-    lineHeight: 16,
+    lineHeight: 10,
   },
 });
 

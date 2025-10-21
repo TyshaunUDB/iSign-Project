@@ -1,40 +1,44 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Switch,
-  ScrollView,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Stack } from 'expo-router';
 import UserHeader from '../components/Userheader';
 import Navbar from '../(tabs)/navbar';
-
-export default function Preferences() {
-  const [selectedFont, setSelectedFont] = useState<'Small' | 'Medium' | 'Large'>('Medium');
-  const [chatHistoryEnabled, setChatHistoryEnabled] = useState(true);
-
-  const handleFontSelect = (fontSize: 'Small' | 'Medium' | 'Large') => {
-    setSelectedFont(fontSize);
-  };
+import SearchBar from '../components/SearchBar';
+import RecentlyDeletedItems from './RecentlyDeletedItems';
+export default function RecentlyDeleted() {
+  const deletedConversations = [
+    {
+      id: '1',
+      title: 'Title of Conversation 1',
+      subtitle: 'Chat from November 6, 2025',
+    },
+    {
+      id: '2',
+      title: 'Title of Conversation 2',
+      subtitle: 'Chat from October 30, 2025',
+    },
+  ];
 
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
-
       <View style={styles.topBackground}>
         <View style={styles.middleBackground}>
           <UserHeader userName="Popoy" greeting="Kamusta," />
-
           <View style={styles.contentBackground}>
             <ScrollView
               style={styles.scrollContainer}
               contentContainerStyle={styles.scrollContentContainer}
               showsVerticalScrollIndicator={false}
             >
-             
+              <SearchBar />
+
+              {/* ✅ Recently Deleted List */}
+              <RecentlyDeletedItems
+                data={deletedConversations}
+                onRestore={(id) => console.log('Restore:', id)}
+                onDelete={(id) => console.log('Delete:', id)}
+              />
 
             </ScrollView>
             <Navbar />
@@ -65,82 +69,4 @@ const styles = StyleSheet.create({
   },
   scrollContainer: { flex: 1 },
   scrollContentContainer: { paddingBottom: 20, flexGrow: 1 },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#343434',
-    marginVertical: 25,
-  },
-  section: { marginBottom: 25 },
-  sectionTitle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#343434',
-    marginBottom: 1,
-  },
-  sectionSubtitle: {
-    fontSize: 10,
-    color: '#777',
-    opacity: 0.8,
-    marginBottom: 15,
-    flexShrink: 1,
-    flexWrap: 'wrap',
-  },
-  fontOptions: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 10,
-    flexWrap: 'nowrap',
-  },
-  fontButton: {
-    backgroundColor: '#fff',
-    borderRadius: 30,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fontButtonSelected: {
-    borderColor: '#343434',
-  },
-  fontButtonText: {
-    color: '#343434',
-    fontWeight: '500',
-  },
-  fontButtonTextSelected: {
-    fontWeight: 'bold',
-  },
-  checkIcon: {
-    marginLeft: 4,
-  },
-  sectionHeaderRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 10,
-  },
-  textBlock: {
-    flex: 1,
-    paddingRight: 10,
-  },
-switchContainer: {
-  transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }], // ✅ makes it 30% larger
-  flexShrink: 0,
-},
-  separator: {
-    alignSelf: 'center',
-    width: '90%',
-    height: 1,
-    backgroundColor: '#777',
-    opacity: 0.3,
-    marginTop: 15,
-  },
-  settingsSection: {
-  marginTop: 10,
-},
-
 });

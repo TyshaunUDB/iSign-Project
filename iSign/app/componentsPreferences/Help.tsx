@@ -11,6 +11,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
 import UserHeader from '../components/Userheader';
 import Navbar from '../(tabs)/navbar';
+import SearchBar from '../components/SearchBar';
+import HelpTab from './HelpTabs';
 
 export default function Preferences() {
   const [selectedFont, setSelectedFont] = useState<'Small' | 'Medium' | 'Large'>('Medium');
@@ -18,7 +20,32 @@ export default function Preferences() {
 
   const handleFontSelect = (fontSize: 'Small' | 'Medium' | 'Large') => {
     setSelectedFont(fontSize);
+
+   
   };
+
+   const termsContent = [
+    '1. Acceptance of Terms\nBy downloading or using this app, you agree to these Terms and Conditions and our Privacy Policy. If you do not agree, please do not use the app.',
+    '2. How the App Works\nThe app uses your device’s camera to detect and interpret sign language gestures. It processes visual data to provide real-time translations from FSL to text or speech. You must allow camera access for the app to function properly.',
+    '3. User Responsibilities\nOnly use the app for lawful, respectful, and non-invasive purposes. Do not record or translate people without their consent. You are responsible for how you use the app’s translations and any decisions made based on them.',
+    '4. Accuracy Disclaimer\nWhile we strive for accurate translations, the app may not always be 100% correct. Factors like lighting, camera angle, or unclear gestures can affect performance. We are continuously improving, but we cannot guarantee perfect results.',
+    '5. Privacy and Data\nThe app may process visual data locally on your device or through secure servers (if applicable). We do not store videos or personal information unless explicitly stated and consented to. For full details, see our [Privacy Policy].',
+    '6. Intellectual Property\nAll trademarks, content, and technology used in the app are the property of [Your Team/Company Name]. You may not copy, modify, or distribute the app or any part of it without permission.',
+    '7. Limitation of Liability\nWe are not responsible for any harm, misunderstanding, or loss that may result from using the app. Use it at your own risk and always double-check important messages with human interpretation if needed.',
+    '8. Changes to Terms\nWe may update these Terms at any time. Changes will be posted in the app or on our website. Continued use after changes means you accept the new Terms.',
+    '9. Contact Us\nIf you have any questions or feedback, please reach out to us at [your email].',
+  ];
+
+  const privacyContent = [
+    'This app values your privacy and ensures that any personal data collected is handled responsibly.',
+    '1. Information Collection\nWe may collect minimal data to improve functionality, such as app usage analytics.',
+    '2. Camera Usage\nThe app uses your camera solely for gesture detection. No recordings are stored or shared.',
+    '3. Data Protection\nWe apply appropriate security measures to safeguard your data against unauthorized access.',
+    '4. Consent\nBy using this app, you consent to our Privacy Policy. You may withdraw consent anytime by uninstalling the app.',
+    '5. Updates\nOur Privacy Policy may change from time to time. Continued use indicates acceptance of any updates.',
+  ];
+
+
 
   return (
     <View style={styles.container}>
@@ -34,6 +61,11 @@ export default function Preferences() {
               contentContainerStyle={styles.scrollContentContainer}
               showsVerticalScrollIndicator={false}
             >
+
+              <SearchBar />
+
+               <HelpTab title="Terms and Conditions" content={termsContent} />
+              <HelpTab title="Privacy" content={privacyContent} />
              
 
             </ScrollView>
@@ -72,75 +104,5 @@ const styles = StyleSheet.create({
     color: '#343434',
     marginVertical: 25,
   },
-  section: { marginBottom: 25 },
-  sectionTitle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#343434',
-    marginBottom: 1,
-  },
-  sectionSubtitle: {
-    fontSize: 10,
-    color: '#777',
-    opacity: 0.8,
-    marginBottom: 15,
-    flexShrink: 1,
-    flexWrap: 'wrap',
-  },
-  fontOptions: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 10,
-    flexWrap: 'nowrap',
-  },
-  fontButton: {
-    backgroundColor: '#fff',
-    borderRadius: 30,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fontButtonSelected: {
-    borderColor: '#343434',
-  },
-  fontButtonText: {
-    color: '#343434',
-    fontWeight: '500',
-  },
-  fontButtonTextSelected: {
-    fontWeight: 'bold',
-  },
-  checkIcon: {
-    marginLeft: 4,
-  },
-  sectionHeaderRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 10,
-  },
-  textBlock: {
-    flex: 1,
-    paddingRight: 10,
-  },
-switchContainer: {
-  transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }], // ✅ makes it 30% larger
-  flexShrink: 0,
-},
-  separator: {
-    alignSelf: 'center',
-    width: '90%',
-    height: 1,
-    backgroundColor: '#777',
-    opacity: 0.3,
-    marginTop: 15,
-  },
-  settingsSection: {
-  marginTop: 10,
-},
 
 });
