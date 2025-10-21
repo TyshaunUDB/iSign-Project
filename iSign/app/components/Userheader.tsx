@@ -1,5 +1,6 @@
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import { router } from "expo-router";
 
 interface UserHeaderProps {
   userName: string;
