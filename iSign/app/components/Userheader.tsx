@@ -1,6 +1,6 @@
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import { router } from "expo-router";
+import { router } from 'expo-router'; // ✅ correct import
 
 interface UserHeaderProps {
   userName: string;
@@ -23,7 +23,8 @@ export default function Userheader({ userName, greeting }: UserHeaderProps) {
         />
 
         {/* ✅ Corrected navigation path */}
-        <TouchableOpacity onPress={() => router.push('/components/Preferences')}>
+        {/* ✅ Corrected navigation path */}
+        <TouchableOpacity onPress={() => router.push('../components/Preferences')}>
           <Ionicons
             name="settings"
             size={24}
