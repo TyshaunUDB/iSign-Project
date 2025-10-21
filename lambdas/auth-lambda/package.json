@@ -1,0 +1,14 @@
+{
+  "name": "isign-auth",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.632.0",
+    "@aws-sdk/client-secrets-manager": "^3.632.0",
+    "bcryptjs": "^2.4.3",
+    "google-auth-library": "^9.14.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0"
+  }
+}
