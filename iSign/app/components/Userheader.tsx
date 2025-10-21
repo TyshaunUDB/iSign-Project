@@ -20,12 +20,16 @@ export default function Userheader({ userName, greeting }: UserHeaderProps) {
           style={styles.mascotImage}
           resizeMode="contain"
         />
-        <Ionicons
-          name="settings"
-          size={24}
-          color="#343434"
-          style={styles.settingsIcon}
-        />
+
+        {/* ✅ Corrected navigation path */}
+        <TouchableOpacity onPress={() => router.push('/components/Preferences')}>
+          <Ionicons
+            name="settings"
+            size={24}
+            color="#343434"
+            style={styles.settingsIcon}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
