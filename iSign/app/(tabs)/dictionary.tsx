@@ -1,4 +1,3 @@
-// app/componentsDictionary/Dictionary.tsx (or wherever this lives)
 import React, { useEffect, useState, useMemo } from "react";
 import {
   View,
