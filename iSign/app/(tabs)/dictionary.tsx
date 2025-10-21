@@ -1,140 +1,114 @@
-// app/componentsDictionary/Dictionary.tsx (or wherever this lives)
-import React, { useEffect, useState, useMemo } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import React from 'react';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 
 // Import components
-import UserHeader from "../components/Userheader";
-import SearchBar from "../components/SearchBar";
-import FavoritesHeader from "../componentsDictionary/FavoritesHeader";
-import DictionaryCard from "../componentsDictionary/DictionaryCard";
-import Navbar from "./navbar";
-import { router } from "expo-router";
-
-// Import your API + types
-import { fetchCategories } from "../services/dictApi";
-import type { Category } from "../types/dictionary";
+import UserHeader from '../components/Userheader';
+import SearchBar from '../components/SearchBar';
+import FavoritesHeader from '../componentsDictionary/FavoritesHeader';
+import DictionaryCard from '../componentsDictionary/DictionaryCard';
+import { router } from 'expo-router';
+import Navbar from './navbar';
 
 export default function Dictionary() {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [err, setErr] = useState<string | null>(null);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [search, setSearch] = useState<string>("");
+    
+    const handleFavoritesPress = () => {
+         router.push("/componentsDictionary/FavoritesTab");
+    };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const cats = await fetchCategories();
-        setCategories(cats);
-      } catch (e: any) {
-        const msg = e?.message ?? "Failed to load categories";
-        setErr(msg);
-        Alert.alert("Dictionary", msg);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+    const handleCardArrowPress = () => {
+        router.push("/componentsDictionary/FSLAlphabet");
+    };
 
-  // Optional: simple client-side filter with your SearchBar (if it exposes onChange)
-  const visibleCategories = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    if (!q) return categories;
-    return categories.filter((c) => c.name.toLowerCase().includes(q));
-  }, [categories, search]);
+      const handleFoodCardArrowPress = () => {
+        router.push("/componentsDictionary/FSLFoodCategory");
+    };
 
-  const handleFavoritesPress = () => {
-    router.push("/componentsDictionary/FavoritesTab");
-  };
+    const handleFavoriteToggle = (isFavorited: boolean) => {
+        console.log('Favorite toggled:', isFavorited);
+    };
 
-  // When a category card’s arrow is pressed
-  const handleCategoryOpen = (cat: Category) => {
-    // Navigate to your category page where you’ll list SIGNS for this category
-    // Create this screen later (e.g., app/componentsDictionary/Category.tsx)
-    router.push({
-      pathname: "/componentsDictionary/FSLAlphabet",
-      params: { slug: cat.slug, name: cat.name },
-    });
-  };
+    return (
+        <View style={styles.container}>
+            <Navbar />
+            <View style={styles.topBackground}>
+                <View style={styles.middleBackground}>
 
-  const handleFavoriteToggle = (isFavorited: boolean) => {
-    // Wire up to your persistence if needed
-    console.log("Favorite toggled:", isFavorited);
-  };
+                    <UserHeader 
+                        userName="Dictionary" 
+                        greeting="Your FSL" 
+                    />
 
-  return (
-    <View style={styles.container}>
-      <Navbar />
-      <View style={styles.topBackground}>
-        <View style={styles.middleBackground}>
-          <UserHeader userName="Dictionary" greeting="Your FSL" />
+                    <View style={styles.contentBackground}>
 
-          <View style={styles.contentBackground}>
-            <SearchBar
-              placeholder="Search Dictionary"
-              // If your SearchBar supports it; otherwise remove these two:
-              value={search}
-              onChangeText={setSearch}
-            />
+                          <SearchBar
+                            placeholder="Search Dictionary"
+                        />
+                        
+                        <ScrollView
+                            style={styles.scrollContainer}
+                            contentContainerStyle={styles.contentContainer}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <FavoritesHeader onPress={handleFavoritesPress} />
+                            
+                           <DictionaryCard
+                                title="FSL Alphabet"
+                                description="Click to learn the FSL alphabet"
+                                onArrowPress={handleCardArrowPress}
+                                onFavoritePress={handleFavoriteToggle}
+                                initialFavorited={false}
+                                imageSource={require('../../assets/images/fslalphabet.png')}
+                                />
 
-            {loading ? (
-              <ActivityIndicator style={{ marginTop: 16 }} />
-            ) : (
-              <ScrollView
-                style={styles.scrollContainer}
-                contentContainerStyle={styles.contentContainer}
-                showsVerticalScrollIndicator={false}
-              >
-                <FavoritesHeader onPress={handleFavoritesPress} />
 
-                {/* LOOP: one DictionaryCard per category */}
-                {visibleCategories.map((cat) => (
-                  <DictionaryCard
-                    key={cat.slug}
-                    title={cat.name}
-                    description={cat.description ?? "Tap to view signs in this category"}
-                    onArrowPress={() => handleCategoryOpen(cat)}
-                    onFavoritePress={handleFavoriteToggle}
-                    initialFavorited={false}
-                    {...(cat.banner_url
-                      ? { imageSource: { uri: cat.banner_url } }
-                      : {})}
-                  />
-                ))}
-              </ScrollView>
-            )}
-          </View>
+                             <DictionaryCard
+                                title="FSL Food Category"
+                                description="Click to learn to sign Adobo and Sinigang"
+                                onArrowPress={handleFoodCardArrowPress}
+                                onFavoritePress={handleFavoriteToggle}
+                                initialFavorited={false}
+                            />
+                            
+                        </ScrollView>
+                    </View>
+                </View>
+            </View>
         </View>
-      </View>
-    </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#a3a3a3" },
-  topBackground: { flex: 1, backgroundColor: "#a3a3a3", paddingTop: 50 },
-  middleBackground: {
-    flex: 1,
-    backgroundColor: "#e5e5e5",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    paddingTop: 0,
-    position: "relative",
-  },
-  contentBackground: {
-    zIndex: 3,
-    flex: 1,
-    backgroundColor: "#f6f6f6",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    marginTop: -55,
-    padding: 20,
-  },
-  scrollContainer: { flex: 1 },
-  contentContainer: { gap: 15, paddingBottom: 100 },
+    container: {
+        flex: 1,
+        backgroundColor: '#a3a3a3',
+    },
+    topBackground: {
+        flex: 1,
+        backgroundColor: '#a3a3a3',
+        paddingTop: 50,
+    },
+    middleBackground: {
+        flex: 1,
+        backgroundColor: '#e5e5e5',
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        paddingTop: 0,
+        position: 'relative',
+    },
+    contentBackground: {
+        zIndex: 3,
+        flex: 1,
+        backgroundColor: '#f6f6f6',
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        marginTop: -55,
+        padding: 20,
+    },
+    scrollContainer: {
+        flex: 1,
+    },
+    contentContainer: {
+        gap: 15,
+        paddingBottom: 100,
+    },
 });
