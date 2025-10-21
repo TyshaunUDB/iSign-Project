@@ -97,11 +97,10 @@ export default function Dictionary() {
                   <DictionaryCard
                     key={cat.slug}
                     title={cat.name}
-                    description="Tap to view signs in this category"
+                    description={cat.description ?? "Tap to view signs in this category"}
                     onArrowPress={() => handleCategoryOpen(cat)}
                     onFavoritePress={handleFavoriteToggle}
                     initialFavorited={false}
-                    // If your card supports images, pass the banner (remote) if present
                     {...(cat.banner_url
                       ? { imageSource: { uri: cat.banner_url } }
                       : {})}
