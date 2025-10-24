@@ -5,10 +5,18 @@ import UserHeader from '../components/Userheader';
 import SearchBar from "../components/SearchBar";
 import { router, Stack } from "expo-router";
 import Navbar from "../(tabs)/navbar";
+import CategoryInfoCard from "./CategoryInfoCard";
 
 // Import our new modular components
-import AlphabetInfoCard from '../componentsDictionary/AlphabetInfoCard';
-import AlphabetGrid from '../componentsDictionary/AlphabetGrid';
+import CategoryList from "./CategoryLists";
+
+const alphabetItems = Array.from({ length: 26 }, (_, i) => ({
+  id: `${i}`,
+  title: String.fromCharCode(65 + i),
+  // thumbnail: require('../../assets/images/signs/a.png'),
+  // media: require('../../assets/images/signs/a.png'), // or video later
+}));
+
 
 export default function FSLAlphabet() {
     return (
@@ -31,11 +39,13 @@ export default function FSLAlphabet() {
                                 placeholder="Search in FSL Alphabet"
                             />
                             
-                            {/* Info card with image and description */}
-                            <AlphabetInfoCard />
+                           <CategoryInfoCard 
+                           title={"The FSL Alphabet"} 
+                           description={"The FSL alphabet uses one-handed signs to represent each letter, allowing users to spell out words and names in Filipino Sign Language."} 
+                           imageSource={require('../../assets/images/fslalphabet.png')} />
                             
-                            {/* Alphabet grid */}
-                            <AlphabetGrid />
+                            <CategoryList categoryName="Let's Learn to sign the Alphabet!" items={alphabetItems} />
+
                         </ScrollView>
                     </View>
                 </View>

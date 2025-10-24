@@ -6,10 +6,18 @@ import UserHeader from '../components/Userheader';
 import SearchBar from "../components/SearchBar";
 import { router, Stack } from "expo-router";
 import Navbar from "../(tabs)/navbar";
+import CategoryList from "./CategoryLists";
+import CategoryInfoCard from "./CategoryInfoCard";
 
 
 export default function FSLFoodCategory() {
     const [modalVisible, setModalVisible] = useState(false);
+
+    const foodItems = [
+  { id: '1', title: 'Apple' },
+  { id: '2', title: 'Banana' },
+  { id: '3', title: 'Pizza' },
+];
 
     return (
         <View style={styles.container}>
@@ -33,6 +41,13 @@ export default function FSLFoodCategory() {
                         <SearchBar
                             placeholder="Search in FSL Food Category"
                         />
+
+                        <CategoryInfoCard 
+                        title={"FSL Food Category"} 
+                        description={"Learn how to sign common food items and dining-related words in Filipino Sign Language. This category covers everyday vocabulary, helping you communicate your cravings"} 
+                        imageSource={require('../../assets/images/fslfood.png')} />
+
+                        <CategoryList categoryName="Let's Learn to sign Food!" items={foodItems} />
 
                            
 
