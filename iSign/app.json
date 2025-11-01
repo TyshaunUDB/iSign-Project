@@ -26,7 +26,8 @@
       "permissions": [
         "RECORD_AUDIO",
         "INTERNET",
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
       ]
     },
     "web": {
@@ -52,7 +53,8 @@
           "microphonePermission": "Allow iSign to access your microphone.",
           "speechRecognitionPermission": "Allow iSign to use speech recognition."
         }
-      ]
+      ],
+      "react-native-vision-camera"
     ],
     "experiments": {
       "typedRoutes": true
@@ -60,7 +62,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "0833c36b-9f61-4c99-8436-cc880bdc7e47"
+        "projectId": "4f617b1a-37b6-4b04-971b-889fd6e6c760"
       }
     }
   }
