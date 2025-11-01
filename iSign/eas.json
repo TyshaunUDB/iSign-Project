@@ -8,8 +8,12 @@
       "developmentClient": true,
       "distribution": "internal",
       "prebuildCommand": "echo 'Using committed Android folder, skipping prebuild'",
+      "env": {
+        "NODE_BINARY": "node"
+      },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleDebug"
       }
     },
     "preview": {
